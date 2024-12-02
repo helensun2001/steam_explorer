@@ -1,19 +1,20 @@
-# 🎈 Blank app template
+import streamlit as st
+from src.nlp import load_wordvec
 
-A simple Streamlit app template for you to modify!
+st.set_page_config(page_title="Steam Game Explorer", page_icon="🎮")
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+st.write("# Welcome to the Steam Game Explorer! 🎮")
 
-### How to run it on your own machine
+<!-- st.sidebar.success("Select a page above.") -->
 
-1. Install the requirements
-
-   ```
-   $ pip install -r requirements.txt
-   ```
-
-2. Run the app
-
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+st.markdown(
+    """
+    This application helps you discover new games based on your preferences and provides insights into our game database.
+    
+    ### What you can do:
+    - Get personalized game recommendations
+    - Explore visualizations of our game database
+    
+    To get started, select a page from the sidebar on the left.
+    """
+)
