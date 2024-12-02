@@ -1,8 +1,14 @@
+
 import streamlit as st
 import pandas as pd
 from src.data_processing import Calculate_tags_proportion, Table_tag_proportion
+import matplotlib.pyplot as plt
+import seaborn as sns
+import altair as alt
+
 from datetime import datetime
 import plotly.graph_objects as go
+import datetime as dt
 
 def Display_tag_analysis(data,tags_list,all_tags):
     proportion = Calculate_tags_proportion(data,tags_list)
@@ -16,11 +22,6 @@ def Display_tag_analysis(data,tags_list,all_tags):
 def display_metric(metric_description:str,metric:str):
     st.metric(label=metric_description, value=metric)
     # st.caption(metric_description) 
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
-import altair as alt
 
 
 def plot_mean_playtime_by_owners(data):
@@ -55,7 +56,7 @@ def plot_mean_playtime_by_owners(data):
     except:
         st.write('Data missing for median playtime')
 
-def plot_publisher_barchart(data):
+def plot_developer_barchart(data):
     # 创建Altair图表
     grouped_data = pd.DataFrame(data.groupby('developer').size()).reset_index()
     grouped_data.columns= ['developer','count']
@@ -79,7 +80,6 @@ def plot_publisher_barchart(data):
         height=500
     )
     st.altair_chart(chart, use_container_width=True)
-
 
 
 def plot_distribution(data, column, color='skyblue', highlight_value=None, highlight_color='red'):
@@ -106,7 +106,6 @@ def plot_distribution(data, column, color='skyblue', highlight_value=None, highl
     st.pyplot(fig)
 
 
-import datetime as dt
 def plot_count_trend(tag_slice):
     tag_slice['release_date'] = pd.to_datetime(tag_slice['release_date'], errors='coerce')
     tag_slice['year'] = tag_slice['release_date'].apply(lambda x : x.year)
@@ -120,7 +119,7 @@ def plot_count_trend(tag_slice):
 
     fig.update_xaxes(title_text="Year")
     fig.update_layout(
-        title_text="Game Releases and Average Prices Over Years",
+        title_text="Game Releases Over Years",
         hovermode="x unified",
         xaxis = dict(
             tickmode = 'linear',
@@ -147,9 +146,10 @@ def plot_time_trend(tag_slice,col_name,var_name):
         go.Scatter(x=summary['year'], y=summary['var_name'], name= var_name)
 )
     fig.update_xaxes(title_text="Year")
+    title_name = var_name.replace('_',' ').capitalize()
 
     fig.update_layout(
-        title_text=f"Game Releases and {var_name} Over Years",
+        title_text=f"{title_name} Over Years",
         hovermode="x unified",
         xaxis = dict(tick0 = min(summary['year']),
                     tickmode = 'linear',  # 使用数据中最小的年份作为起始点

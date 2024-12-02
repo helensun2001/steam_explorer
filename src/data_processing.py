@@ -1,8 +1,6 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-import pandas as pd
-
 
 
 def Get_random_games(data,
@@ -29,7 +27,7 @@ def Get_data_by_tag(data,
     # game_data_df = data[data['median_playtime']!= 0 ]
     game_data_df = data
     
-    game_data_df['with_tag'] = game_data_df['steamspy_tags'].apply(lambda x: 1 if str(tag).lower() in str(x).lower() else 0)
+    game_data_df['with_tag'] = game_data_df['tags'].apply(lambda x: 1 if str(tag).lower() in str(x).lower() else 0)
     filtered_data = game_data_df[game_data_df['with_tag'] == 1]
 
     return filtered_data
@@ -43,9 +41,9 @@ def find_most_common_subset(sets, threshold=None):
     element_counts = Counter(all_elements)
     
     if threshold is None:
-        threshold = len(sets) // 2  # 可以调整这个阈值
+        threshold = len(sets) #// 2  # 可以调整这个阈值
     
-    common_elements = {elem for elem, count in element_counts.items() if count > threshold}
+    common_elements = {elem for elem, count in element_counts.items() if count >= threshold}
     result = list(common_elements)
     return result
 

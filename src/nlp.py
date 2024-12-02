@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pylab import xticks, np
 import re  
+
 import spacy
 from spacy.matcher import PhraseMatcher
 from spacy.language import Language
@@ -64,16 +65,7 @@ def compare_input_games(games,input_wordbags,model):
     return dic
 
 def rank_dict(data, n=10):
-    """
-    对字典按照值从大到小排序，并返回前N名的结果，以数据框格式输出。
 
-    参数:
-    - data: dict, 要处理的字典
-    - n: int, 需要提取的前N名 (默认为10)
-
-    返回:
-    - pd.DataFrame: 包含前N名的键和值的数据框
-    """
     if not isinstance(data, dict):
         raise ValueError("输入数据必须是字典类型")
 
@@ -243,7 +235,3 @@ def get_vectors(keywords, model):
         if word in model:
             vectors.append(model[word])
     return vectors
-
-import numpy as np
-
-

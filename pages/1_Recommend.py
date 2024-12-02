@@ -106,28 +106,6 @@ def get_top10_similar_games(games, input_genre,input_description,rank_method,mod
             return result
 
 @compute_with_loading
-def display_recommended_games(recommended_game_ids):
-    for app_id in recommended_game_ids:
-        game_details = get_game_details(app_id)
-        if game_details:
-            # 展示游戏头图和基本信息
-            st.image(game_details["header_image"], width=200)
-            st.write(f"**Name**: {game_details['name']}")
-            st.write(f"**Developer**: {game_details['developer']}")
-            st.write(f"**Release Date**: {game_details['release_date']}")
-            # st.write(f"**Positive Reviews**: {game_details['positive_reviews']}")
-            st.write(f"**Tags**: {', '.join(game_details['tags'])}")
-            st.write(f"**Short Description**: {game_details['short_description']}")
-            
-            # 展开详细信息框
-            with st.expander("Show Description"):
-                st.markdown(game_details["detailed_description"], unsafe_allow_html=True)
-                # st.write(game_details["detailed_description"])
-
-            st.divider()
-
-import streamlit as st
-
 def display_recommended_games2(recommended_game_ids):
     for app_id in recommended_game_ids:
         i = 0
@@ -138,7 +116,7 @@ def display_recommended_games2(recommended_game_ids):
                 # 使用 expander 包含图片、基本信息和详细信息
                 
                 # 撑满网页的图片
-                st.image(game_details["header_image"], use_column_width=True)
+                st.image(game_details["header_image"], use_container_width=True)
 
                 # 分为三栏显示基本信息
                 col1, col2, col3 = st.columns(3)
@@ -228,15 +206,11 @@ if st.session_state.page == "create":
                 st.write('Try another description!')
             else:
                 recommended_games_for_chart = pd.merge(game_similarity_top10,games,how = 'inner',on = ['appid','name'])
-                tab1, tab2 = st.tabs(["game detail", "game charts"])
+                tab1, tab2 = st.tabs(["Game Details", "Game Charts"])
                 with tab1:
                     st.title("The following similar games are found.")
             
-                    # st.write(game_similarity_top10)
                     display_recommended_games2(list(game_similarity_top10['appid']))
-
-                    # else:
-                    #     st.warning("No paragraph found. Please return to the Create page.")
 
                     if st.button("Back"):
                         go_to_page("create")
